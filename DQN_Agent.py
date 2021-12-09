@@ -59,7 +59,7 @@ class DQN(object):
         is_random = 0
         if np.random.uniform() < self.epsilon:  # greedy
             actions_value = self.eval_net.forward(x)
-            action = torch.argmax(actions_value, 1)[1].data.numpy()
+            action = torch.max(actions_value, 1)[1].data.numpy()[0]
         else:  # random
             action = np.random.randint(0, self.N_actions)
             is_random = 1

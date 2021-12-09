@@ -15,7 +15,6 @@ def compute_badw_ch(ue_info, bs_info):
     TP_Bndw = 5000000  # bandwidth in Hz
     Nsd = -174 # noise spectral density in dBm/Hz
     # -------------resource block data------------
-    subfrm_len = 1  # subframe length in mille seconds
     subch_Pt = Pt / TP_subchannel
     RB_Bndw = TP_Bndw / TP_subchannel
     Nsd_mW = math.pow(10, (Nsd / 10))  # --in mW--convert in =
@@ -36,7 +35,7 @@ def compute_badw_ch(ue_info, bs_info):
     rij = subch_Pt - path_loss# - np.random.randint(1, 10)  # rssi nith nic of ith UE to jth AP
     print(rij)
     RB_Thr = RB_Bndw  * math.log2(1 + (rij / NoB_subch))  # bps
-    Need_badw = rate_demand * 1000 / RB_Thr * RB_Bndw
+    Need_badw = rate_demand * 1000 / RB_Thr# * RB_Bndw
     return Need_badw
 
 def compute_badw(ue_info, bs_info):
@@ -58,7 +57,7 @@ def compute_badw(ue_info, bs_info):
                      metric='euclidean')
 
     path_loss = (20 * math.log(distance[0, 0])) + (20 * math.log(TP_freq)) - 27.55
-    rij = Pt - path_loss# - np.random.randint(1, 10)
+    rij = Pt/TP_Bndw - path_loss# - np.random.randint(1, 10)
     print(rij)
     EM_Thr = math.log2(1 + (rij / NoB_EM))  # bps
 
